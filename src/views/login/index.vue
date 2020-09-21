@@ -39,40 +39,19 @@ import {login, getUserInfo} from '@/api/login'
       submitForm(formName) {
         
         this.$refs[formName].validate(valid => {
-            // console.log(valid)
-            // console.log(login)
             if (valid) {
-                // 提交表单给后台进行验证是否正确
-                login(this.form.username, this.form.password).then(response => {
-                    const resp = response.data 
-                    // console.log(resp, resp.flag, resp.data.token,resp.message)
-                    if(resp.flag) {
-                        // 验证成功, 通过token去获取用户信息
-                        getUserInfo(resp.data.token).then(response => {
-                            const respUser = response.data
-                            if(respUser.flag){
-                                // 获取到了用户的数据
-                                console.log('userInfo', respUser.data)
-                                // 1. 保存 token ，用户信息
-                                localStorage.setItem('gl-user', JSON.stringify(respUser.data))
-                                localStorage.setItem('gl-token', resp.data.token)
-                                // 前往首页 
-                                this.$router.push('/')
-                            }else {
-                                this.$message({
-                                    message: respUser.message,
-                                    type: 'warning'
-                                })
-                            }
-                            
-                        })
+                // 通过dispatch()函数触发store中定义的user组件中的actions下的Login方法
+                // 此方法会调用接口请求token值，并且请求成功之后会token值保存到state下进行管理
+                // 并且把token值存储到localstorage中，方便页面刷新之后获取token值
+                this.$store.dispatch('Login',this.form).then(resp=>{
+                    // 获取成功跳转页面
+                    if(resp.flag){
+                        this.$router.push('/')
                     }else {
-                        // 未通过，弹出警告
-                        // alert(resp.message)
                         this.$message({
-                            message: resp.message,
-                            type: 'warning'
-                        });
+                            message: response.message,
+                            type: 'waring'
+                        })
                     }
                 })
             }else{
@@ -100,9 +79,11 @@ import {login, getUserInfo} from '@/api/login'
     height: 100%;
     background: url('../../assets/timg1.jpg') no-repeat; 
     background-size: 100% 100%;
+    transform: translateX();
 }
 .login-title {
     color: #303133;
     text-align: center;
+
 }
 </style>

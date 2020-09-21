@@ -7,7 +7,7 @@
 
     <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
-        下拉菜单
+        {{user.name}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -22,17 +22,23 @@
 <script>
 import {getUserOut} from '@/api/login'
 export default {
+  data(){
+    return {
+      user: this.$store.state.user.user
+    }
+  },
   
   methods: {
     handleCommand(command) {
       switch (command) {
         case "a":
           // 打开修改密码窗口
+         console.log("修改密码"); 
           this.handlePwd();
           break;
         case "b":
           // 退出系统
-          console.log(123)
+          console.log("退出登录")
           this.handleLogout();
           break;
         default:
@@ -41,8 +47,6 @@ export default {
     },
     // 退出系统
     handleLogout(){
-      console.log(localStorage.getItem('gl-token'))
-      console.log(localStorage.getItem('gl-user'))
       // 返回登录时候用户信息
       getUserOut(localStorage.getItem('gl-token')).then(response => {
         // 定义一个变量接收服务端返回的数据
@@ -50,12 +54,13 @@ export default {
         // 判断成功与否
         if(resp.flag){
           // 成功
-          // 清楚用户数据
+          // 清除缓存数据
           localStorage.removeItem('gl-token')
           localStorage.removeItem('gl-user')
-          // 回到登录界面
+          // 返回登录界面
           this.$router.push('/login')
         }else {
+          // 错误执行代码
          this.$message({
               message: resp.message,
               type: 'warning',
@@ -65,8 +70,6 @@ export default {
       })
     }
   }
-  // @select="handleSelect"
-  // :default-active="activeIndex"
 };
 </script>
 <style >

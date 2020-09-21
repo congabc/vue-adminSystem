@@ -34,6 +34,17 @@
 .navbar{
   padding: 30px 0;
 }
+.el-menu-vertical-demo{
+  margin: 30px 0;
+}
+.el-menu-vertical-demo > li{
+  margin-bottom: 10px;
+}
+span  {
+  font-size: 18px;
+  
+}
+
     .el-menu {
         border-right: none;
     }

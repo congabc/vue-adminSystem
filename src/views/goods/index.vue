@@ -157,11 +157,11 @@ export default {
     methods: {
         // 查询
         fetchData(){
+            
             goodsApi.search(this.currentPage,this.pageSize,this.searchMap).then(response=>{
                 const lists=response.data.data
                 this.list=lists.rows
                 this.total=lists.total
-                console.log(response)
             })
         },
         // 分页

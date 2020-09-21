@@ -146,10 +146,7 @@ export default {
         },
         fetchData(){
             supplierApi.search(this.currentPage, this.pageSizes, this.searchMap).then(response =>{
-                // 声明一个变量获取数组（错）
                 const lists = response.data
-                // 赋值 （错）
-                // console.log(lists)
                 this.list= lists.data.rows
                 this.tatal=lists.data.tatal
                 
@@ -181,6 +178,7 @@ export default {
            }else {
              return false
            }
+           
          })
        },
       //  编辑修改提交数据

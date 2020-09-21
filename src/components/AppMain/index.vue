@@ -8,6 +8,7 @@
 import AppList from './list'
 export default {
     components:{AppList}
+    
 }
 </script>
 <style scoped>

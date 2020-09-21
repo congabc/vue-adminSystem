@@ -209,7 +209,6 @@ export default {
           memberApi.add(this.pojo).then(response => {
             // console.log(response)
             const resp =response.data
-            console.log(resp.flag)
             if(resp.flag){
               this.fetchData()
               this.dialogFormVisible = false 
@@ -239,7 +238,6 @@ export default {
           const resp = response.data;
           this.list = resp.data.rows;
           this.tatal = resp.data.tatal;
-          console.log(resp.data.tatal);
         });
     },
 
@@ -256,7 +254,6 @@ export default {
   },
       // 编辑
     handleEdit(id) {
-      // console.log("编辑" + id);
       this.handleAdd()
       if(id){
         //有id传入
@@ -266,10 +263,8 @@ export default {
             // 查询成功
             // 先打开新增框
             this.pojo =resp.data
-            // console.log(resp.data)
 
           }else {
-            console.log(123)
           }
         })
       }
